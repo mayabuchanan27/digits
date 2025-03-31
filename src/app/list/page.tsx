@@ -3,7 +3,12 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import { Contact } from '@/lib/validationSchemas';
+
+import { prisma } from '@/lib/prisma';
+import ContactCard from '../../components/ContactCard';
+
 import ContactCard from '@/components/ContactCard';
+
 
 /** Render a list of stuff for the logged in user. */
 const ListPage = async () => {
@@ -13,6 +18,14 @@ const ListPage = async () => {
       user: { email: string; id: string; randomKey: string };
     } | null,
   );
+
+  const owner = session?.user!.email ? session?.user!.email : '';
+  const contacts: Contact[] = await prisma.contact.findMany({
+    where: {
+      owner,
+    },
+  });
+  console.log(contacts);
 
   const contacts: Contact[] = [
     {
