@@ -5,10 +5,7 @@ import authOptions from '@/lib/authOptions';
 import { Contact } from '@/lib/validationSchemas';
 
 import { prisma } from '@/lib/prisma';
-import ContactCard from '../../components/ContactCard';
-
 import ContactCard from '@/components/ContactCard';
-
 
 /** Render a list of stuff for the logged in user. */
 const ListPage = async () => {
@@ -20,13 +17,12 @@ const ListPage = async () => {
   );
 
   const owner = session?.user!.email ? session?.user!.email : '';
-  const contacts: Contact[] = await prisma.contact.findMany({
+  const contactsFromPrisma: Contact[] = await prisma.contact.findMany({
     where: {
       owner,
     },
   });
-  console.log(contacts);
-
+  console.log(contactsFromPrisma);
   const contacts: Contact[] = [
     {
       firstName: 'Philip',
