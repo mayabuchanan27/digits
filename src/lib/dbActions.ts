@@ -1,14 +1,14 @@
 'use server';
 
-import { Stuff, Condition } from '@prisma/client';
+import { Stuff, Condition, Contact } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
 
 /**
- * Adds a new stuff to the database.
- * @param stuff, an object with the following properties: name, quantity, owner, condition.
- */
+* Adds a new stuff to the database.
+* @param stuff, an object with the following properties: name, quantity, owner, condition.
+*/
 export async function addStuff(stuff: { name: string; quantity: number; owner: string; condition: string }) {
   // console.log(`addStuff data: ${JSON.stringify(stuff, null, 2)}`);
   let condition: Condition = 'good';
@@ -32,9 +32,9 @@ export async function addStuff(stuff: { name: string; quantity: number; owner: s
 }
 
 /**
- * Edits an existing stuff in the database.
- * @param stuff, an object with the following properties: id, name, quantity, owner, condition.
- */
+* Edits an existing stuff in the database.
+* @param stuff, an object with the following properties: id, name, quantity, owner, condition.
+*/
 export async function editStuff(stuff: Stuff) {
   // console.log(`editStuff data: ${JSON.stringify(stuff, null, 2)}`);
   await prisma.stuff.update({
@@ -51,9 +51,49 @@ export async function editStuff(stuff: Stuff) {
 }
 
 /**
- * Deletes an existing stuff from the database.
- * @param id, the id of the stuff to delete.
- */
+* Adds a new contact to the database.
+* @param contact, an object with the following properties: firstName, lastName, address, image, description, owner.
+*/
+export async function addContact(contact: {
+  firstName: string;
+  lastName: string;
+  address: string;
+  image: string;
+  description: string;
+  owner: string;
+}) {
+  await prisma.contact.create({
+    data: {
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      address: contact.address,
+      image: contact.image || '',
+      description: contact.description || '',
+      owner: contact.owner,
+    },
+  });
+  redirect('/list');
+}
+
+export async function editContact(contact: Contact) {
+  await prisma.contact.update({
+    where: { id: contact.id },
+    data: {
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      address: contact.address,
+      image: contact.image,
+      description: contact.description,
+      owner: contact.owner,
+    },
+  });
+  redirect('/list');
+}
+
+/**
+* Deletes an existing stuff from the database.
+* @param id, the id of the stuff to delete.
+*/
 export async function deleteStuff(id: number) {
   // console.log(`deleteStuff id: ${id}`);
   await prisma.stuff.delete({
@@ -64,9 +104,9 @@ export async function deleteStuff(id: number) {
 }
 
 /**
- * Creates a new user in the database.
- * @param credentials, an object with the following properties: email, password.
- */
+* Creates a new user in the database.
+* @param credentials, an object with the following properties: email, password.
+*/
 export async function createUser(credentials: { email: string; password: string }) {
   // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
   const password = await hash(credentials.password, 10);
@@ -79,9 +119,9 @@ export async function createUser(credentials: { email: string; password: string 
 }
 
 /**
- * Changes the password of an existing user in the database.
- * @param credentials, an object with the following properties: email, password.
- */
+* Changes the password of an existing user in the database.
+* @param credentials, an object with the following properties: email, password.
+*/
 export async function changePassword(credentials: { email: string; password: string }) {
   // console.log(`changePassword data: ${JSON.stringify(credentials, null, 2)}`);
   const password = await hash(credentials.password, 10);
