@@ -2,8 +2,7 @@ import { getServerSession } from 'next-auth';
 import { Col, Container, Row } from 'react-bootstrap';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
-import { Contact } from '@/lib/validationSchemas';
-
+import { Contact } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import ContactCard from '@/components/ContactCard';
 
@@ -17,12 +16,17 @@ const ListPage = async () => {
   );
 
   const owner = session?.user!.email ? session?.user!.email : '';
-  const contactsFromPrisma: Contact[] = await prisma.contact.findMany({
+  const contacts: Contact[] = await prisma.contact.findMany({
     where: {
       owner,
     },
   });
-  console.log(contactsFromPrisma);
+
+  const notes = await prisma.note.findMany({
+    where: {
+      owner,
+    },
+  });
 
   return (
     <main>
@@ -32,9 +36,9 @@ const ListPage = async () => {
             <Col>
               <h1 className="text-center">List Contacts</h1>
               <Row xs={1} md={2} lg={3} className="g-4">
-                {contactsFromPrisma.map((contact: Contact) => (
+                {contacts.map((contact: Contact) => (
                   <Col key={`${contact.firstName}-${contact.lastName}-${contact}`}>
-                    <ContactCard contact={contact} />
+                    <ContactCard contact={contact} notes={notes.filter(note => (note.contactId === contact.id))} />
                   </Col>
                 ))}
               </Row>
