@@ -1,6 +1,6 @@
 <img src="doc/landing.png">
 
-nextjs-application-template is a sample Next.js 14 application that illustrates:
+This is a sample Next.js 14 application that demonstrates:
 
 - A standard directory layout using 'src/' as recommended in the [Next.js Project Structure](https://nextjs.org/docs/getting-started/project-structure) guide.
 - [Bootstrap 5 React](https://react-bootstrap.github.io/) for user interface.
@@ -10,15 +10,7 @@ nextjs-application-template is a sample Next.js 14 application that illustrates:
 - Alerts regarding success or failure of DB updates using [Sweet Alert](https://sweetalert.js.org/).
 - Quality assurance using [ESLint](http://eslint.org) with packages to partially enforce the [Next.js ESLint rules](https://nextjs.org/docs/app/building-your-application/configuring/eslint) and the [AirBnB Javascript Style Guide](https://github.com/airbnb/javascript).
 
-The goal of this template is to help you get quickly started doing Next.js development by providing a reasonable directory structure for development and deployment, a set of common extensions to the core framework, and boilerplate code to implement basic page display, navigation, forms, roles, and database manipulation.
-
-To keep this codebase simple and small, some important capabilities are intentionally excluded from this template:
-
-- Unit Testing
-- Security
-- Deployment
-
-Examples of the these capabilities will be provided elsewhere.
+The goal of this template is to help you with a contact management system where users can register, log in, and manage their personal contact lists.
 
 ## Installation
 
@@ -167,7 +159,7 @@ The src/ directory has this structure:
 app/
 
   add/ # The add route
-    page.tsx # The Add Stuff Page
+    page.tsx # The Add Contact Page
 
   admin/
     page.tsx # The Admin Page
@@ -189,10 +181,10 @@ app/
       page.tsx # The Sign Up / Register Page
 
   edit/
-    page.tsx # The Edit Stuff Page
+    page.tsx # The Edit Contact Page
 
   list/
-    page.tsx # The List Stuff Page
+    page.tsx # The List Contact Page
 
   not-authorized/
     page.tsx # The Not Authorized Page
@@ -206,13 +198,13 @@ app/
   components/
     AddContactForm.tsx # The React Hook Form for adding contact.
 
-    AddNoteForm.tsx # The Add Note section 
+    AddNoteForm.tsx # Form component for adding a note to a contact.
 
-    ContactCard.tsx # 
+    ContactCard.tsx # Displays individual contact information in the list view.
 
-    ContactCardAdmin.tsx #
+    ContactCardAdmin.tsx # Displays contact info with additional admin-level actions.
 
-    EditContactForm.tsx # The Edit Contact Form.
+    EditContactForm.tsx # Form for editing existing contact details.
 
     Footer.tsx # The application footer.
 
@@ -220,7 +212,7 @@ app/
 
     Navbar.tsx # The application navbar.
 
-    NoteItem.tsx #
+    NoteItem.tsx # Displays a single note attached to a contact.
 
   lib/
 
@@ -238,9 +230,11 @@ app/
 
 ### Application functionality
 
-The application implements a simple CRUD application for managing "Contact", which is a PostgreSQL table consisting of a name (String), a quantity (Number), a condition (one of 'excellent', 'good', 'fair', or 'poor') and an owner.
+### Application Functionality
 
-By default, each user only sees the Stuff that they have created. However, the settings file enables you to define default accounts. If you define a user with the role "admin", then that user gets access to a special page which lists all the Contact defined by all users.
+The application implements a simple CRUD (Create, Read, Update, Delete) system for managing **Contacts**. Each contact includes a first name, last name, address, image, description, and an owner (the user who created it). Contacts can also have associated notes.
+
+By default, users can only view and manage the contacts they own. The application initializes with default users from a settings file, such as `john@foo.com`. Depending on the roles defined in the settings file, users may have additional access (e.g., admin privileges), though in the current setup, the contact list is user-specific and private.
 
 #### Landing page
 
