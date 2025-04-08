@@ -10,7 +10,7 @@ This is a sample Next.js 14 application that demonstrates:
 - Alerts regarding success or failure of DB updates using [Sweet Alert](https://sweetalert.js.org/).
 - Quality assurance using [ESLint](http://eslint.org) with packages to partially enforce the [Next.js ESLint rules](https://nextjs.org/docs/app/building-your-application/configuring/eslint) and the [AirBnB Javascript Style Guide](https://github.com/airbnb/javascript).
 
-The goal of this template is to help you with a contact management system where users can register, log in, and manage their personal contact lists.
+The goal of this template is to helps you with a contact management system where users can register, log in, and manage their personal contact lists.
 
 ## Installation
 
