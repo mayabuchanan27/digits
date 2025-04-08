@@ -240,7 +240,7 @@ By default, users can only view and manage the contacts they own. The applicatio
 
 When you retrieve the app at http://localhost:3000, this is what should be displayed:
 
-<img src="landing.png">
+<img src="docs/landing.png">
 
 The next step is to use the Login menu to either Login to an existing account or register a new account.
 
@@ -248,19 +248,19 @@ The next step is to use the Login menu to either Login to an existing account or
 
 Clicking on the Login link, then on the Sign In menu item displays this page:
 
-<img src="signin.png">
+<img src="docs/signin.png">
 
 #### Register page
 
 Alternatively, clicking on the Login link, then on the Sign Up menu item displays this page:
 
-<img src="signup.png">
+<img src="docs/signup.png">
 
 #### Landing (after Login) page, non-Admin user
 
 Once you log in (either to an existing account or by creating a new one), the navbar changes as follows:
 
-<img src="landingafterlogin.png">
+<img src="docs/landingafterlogin.png">
 
 You can now add new Contacts, and see the list of Contacts. Note you cannot see any Stuff created by other users.
 
@@ -268,13 +268,13 @@ You can now add new Contacts, and see the list of Contacts. Note you cannot see 
 
 After logging in, here is the page that allows you to add a new Contact:
 
-<img src="addcontact.png">
+<img src="docs/addcontact.png">
 
 #### List Contact page
 
 After logging in, here is the page that allows you to list all the Contacts you have created:
 
-<img src="listcontact.png">
+<img src="docs/listcontact.png">
 
 You click the "Edit" link to go to the Edit Contact page, shown next.
 
@@ -282,19 +282,19 @@ You click the "Edit" link to go to the Edit Contact page, shown next.
 
 After clicking on the "Edit" link associated with an item, this page displays that allows you to change and save it:
 
-<img src="editcontact.png">
+<img src="docs/editcontact.png">
 
 #### Landing (after Login), Admin user
 
 You can define an "admin" user in the settings.json file. This user, after logging in, gets a special entry in the navbar:
 
-<img src="landingadmin.png">
+<img src="docs/landingadmin.png">
 
 #### Admin page (list all users stuff)
 
 To provide a simple example of a "super power" for Admin users, the Admin page lists all of the Stuff by all of the users:
 
-<img src="admin.png">
+<img src="docs/admin.png">
 
 Note that non-admin users cannot get to this page, even if they type in the URL by hand.
 
