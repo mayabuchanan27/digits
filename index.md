@@ -1,4 +1,4 @@
-<img src="landing.png">
+<img src="docs/landing.png">
 
 This is a sample Next.js 14 application that demonstrates:
 
