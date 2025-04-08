@@ -1,6 +1,6 @@
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/landing-page.png)
+<img src="doc/landing.png">
 
-nextjs-application-template is a sample Next.js 14 application that illustrates:
+This is a sample Next.js 14 application that demonstrates:
 
 - A standard directory layout using 'src/' as recommended in the [Next.js Project Structure](https://nextjs.org/docs/getting-started/project-structure) guide.
 - [Bootstrap 5 React](https://react-bootstrap.github.io/) for user interface.
@@ -10,15 +10,7 @@ nextjs-application-template is a sample Next.js 14 application that illustrates:
 - Alerts regarding success or failure of DB updates using [Sweet Alert](https://sweetalert.js.org/).
 - Quality assurance using [ESLint](http://eslint.org) with packages to partially enforce the [Next.js ESLint rules](https://nextjs.org/docs/app/building-your-application/configuring/eslint) and the [AirBnB Javascript Style Guide](https://github.com/airbnb/javascript).
 
-The goal of this template is to help you get quickly started doing Next.js development by providing a reasonable directory structure for development and deployment, a set of common extensions to the core framework, and boilerplate code to implement basic page display, navigation, forms, roles, and database manipulation.
-
-To keep this codebase simple and small, some important capabilities are intentionally excluded from this template:
-
-- Unit Testing
-- Security
-- Deployment
-
-Examples of the these capabilities will be provided elsewhere.
+The goal of this template is to help you with a contact management system where users can register, log in, and manage their personal contact lists.
 
 ## Installation
 
@@ -26,7 +18,7 @@ First, [install PostgreSQL](https://www.postgresql.org/download/). Then create a
 
 ```
 
-$ createdb nextjs-application-template
+$ createdb digits
 Password:
 $
 
@@ -112,7 +104,7 @@ $ npm run dev
 
 ### Viewing the running app
 
-If all goes well, the template application will appear at [http://localhost:3000](http://localhost:3000). You can login using the credentials in [settings.development.json](https://github.com/ics-software-engineering/nextjs-application-template/blob/main/config/settings.development.json), or else register a new account.
+If all goes well, the digits application will appear at [http://localhost:3000](http://localhost:3000). You can login using the credentials in [settings.development.json](https://github.com/ics-software-engineering/nextjs-application-template/blob/main/config/settings.development.json), or else register a new account.
 
 ### ESLint
 
@@ -167,7 +159,7 @@ The src/ directory has this structure:
 app/
 
   add/ # The add route
-    page.tsx # The Add Stuff Page
+    page.tsx # The Add Contact Page
 
   admin/
     page.tsx # The Admin Page
@@ -189,10 +181,10 @@ app/
       page.tsx # The Sign Up / Register Page
 
   edit/
-    page.tsx # The Edit Stuff Page
+    page.tsx # The Edit Contact Page
 
   list/
-    page.tsx # The List Stuff Page
+    page.tsx # The List Contact Page
 
   not-authorized/
     page.tsx # The Not Authorized Page
@@ -204,9 +196,15 @@ app/
   providers.tsx # Session providers.
 
   components/
-    AddStuffForm.tsx # The React Hook Form for adding stuff.
+    AddContactForm.tsx # The React Hook Form for adding contact.
 
-    EditStuffForm.tsx # The Edit Stuff Form.
+    AddNoteForm.tsx # Form component for adding a note to a contact.
+
+    ContactCard.tsx # Displays individual contact information in the list view.
+
+    ContactCardAdmin.tsx # Displays contact info with additional admin-level actions.
+
+    EditContactForm.tsx # Form for editing existing contact details.
 
     Footer.tsx # The application footer.
 
@@ -214,9 +212,7 @@ app/
 
     Navbar.tsx # The application navbar.
 
-    StuffItem.tsx # Row in the list stuff page.
-
-    StuffItemAdmin.tsx # Row in the admin list stuff page.
+    NoteItem.tsx # Displays a single note attached to a contact.
 
   lib/
 
@@ -234,15 +230,17 @@ app/
 
 ### Application functionality
 
-The application implements a simple CRUD application for managing "Stuff", which is a PostgreSQL table consisting of a name (String), a quantity (Number), a condition (one of 'excellent', 'good', 'fair', or 'poor') and an owner.
+### Application Functionality
 
-By default, each user only sees the Stuff that they have created. However, the settings file enables you to define default accounts. If you define a user with the role "admin", then that user gets access to a special page which lists all the Stuff defined by all users.
+The application implements a simple CRUD (Create, Read, Update, Delete) system for managing **Contacts**. Each contact includes a first name, last name, address, image, description, and an owner (the user who created it). Contacts can also have associated notes.
+
+By default, users can only view and manage the contacts they own. The application initializes with default users from a settings file, such as `john@foo.com`. Depending on the roles defined in the settings file, users may have additional access (e.g., admin privileges), though in the current setup, the contact list is user-specific and private.
 
 #### Landing page
 
 When you retrieve the app at http://localhost:3000, this is what should be displayed:
 
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/landing-page.png)
+<img src="doc/landing.png">
 
 The next step is to use the Login menu to either Login to an existing account or register a new account.
 
@@ -250,53 +248,53 @@ The next step is to use the Login menu to either Login to an existing account or
 
 Clicking on the Login link, then on the Sign In menu item displays this page:
 
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/signin-page.png)
+<img src="doc/signin.png">
 
 #### Register page
 
 Alternatively, clicking on the Login link, then on the Sign Up menu item displays this page:
 
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/register-page.png)
+<img src="doc/signup.png">
 
 #### Landing (after Login) page, non-Admin user
 
 Once you log in (either to an existing account or by creating a new one), the navbar changes as follows:
 
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/landing-after-login-page.png)
+<img src="doc/landingafterlogin.png">
 
-You can now add new Stuff documents, and list the Stuff you have created. Note you cannot see any Stuff created by other users.
+You can now add new Contacts, and see the list of Contacts. Note you cannot see any Stuff created by other users.
 
-#### Add Stuff page
+#### Add Contact page
 
-After logging in, here is the page that allows you to add new Stuff:
+After logging in, here is the page that allows you to add a new Contact:
 
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/add-stuff-page.png)
+<img src="doc/addcontact.png">
 
-#### List Stuff page
+#### List Contact page
 
-After logging in, here is the page that allows you to list all the Stuff you have created:
+After logging in, here is the page that allows you to list all the Contacts you have created:
 
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/list-stuff-page.png)
+<img src="doc/listcontact.png">
 
-You click the "Edit" link to go to the Edit Stuff page, shown next.
+You click the "Edit" link to go to the Edit Contact page, shown next.
 
-#### Edit Stuff page
+#### Edit Contact page
 
 After clicking on the "Edit" link associated with an item, this page displays that allows you to change and save it:
 
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/edit-stuff-page.png)
+<img src="doc/editcontact.png">
 
 #### Landing (after Login), Admin user
 
 You can define an "admin" user in the settings.json file. This user, after logging in, gets a special entry in the navbar:
 
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/admin-landing-page.png)
+<img src="doc/landingadmin.png">
 
 #### Admin page (list all users stuff)
 
 To provide a simple example of a "super power" for Admin users, the Admin page lists all of the Stuff by all of the users:
 
-![](https://github.com/ics-software-engineering/nextjs-application-template/raw/main/doc/admin-list-stuff-page.png)
+<img src="doc/admin.png">
 
 Note that non-admin users cannot get to this page, even if they type in the URL by hand.
 
